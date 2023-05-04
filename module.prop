@@ -1,7 +1,7 @@
-id=MMT-Ex
-name=Magisk Module Template Extended
-version=v2.0
+id=TweakPack
+name=TweakPack
+version=v1.0
 versionCode=10
-author=Zackptg5
-description=Magisk Module Template Extended
-updateJson=https://raw.githubusercontent.com/Zackptg5/MMT-Extended/master/update.json
+author=Jaco9512
+description=TweakPack is Magisk Module to improve performance on Android devices
+updateJson=https://raw.githubusercontent.com/Jaco9512/TweakPack/master/update.json

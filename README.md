@@ -4,6 +4,7 @@
   <!-- Version -->
     <img src="https://img.shields.io/badge/Version-v1.0-blue.svg?longCache=true&style=popout-square"
       alt="Version" />
+    <img src="https://img.shields.io/badge/Magisk Module-green.svg?longCache=true&style=flat-square"/>
 
 
 

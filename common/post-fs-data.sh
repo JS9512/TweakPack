@@ -8,8 +8,6 @@ MODDIR=${0%/*}
 
 # This script will be executed in post-fs-data mode
 
-#!/system/bin/sh
-
 stop logd
 
 echo 0 > /d/mmc0/clk_delay

@@ -15,6 +15,12 @@ service call SurfaceFlinger 1022 f 1.5
 # "Disable HW Overlay" Developer Option enabled for smoothness
 service call SurfaceFlinger 1008 i32 1
 
+# Set kernel parameters
+echo "50331648" > /proc/sys/vm/vm.dirty_bytes
+echo "16777216" > /proc/sys/vm/vm.dirty_background_bytes
+echo "400000" > /proc/sys/kernel/sched_min_granularity_ns
+echo "600000" > /proc/sys/kernel/sched_latency_ns
+
 # Trim trigger
 function trim() {
 fstrim -v $1 >> /cache/magisk.log

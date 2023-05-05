@@ -413,6 +413,3 @@ net.tcp.buffersize.umts=600,60000,150000,600,60000,150000
 net.tcp.buffersize.ethernet=600,60000,150000,600,60000,150000
 
 
-kernel.sched_latency_ns=600000
-kernel.sched_min_granularity_ns=400000
-

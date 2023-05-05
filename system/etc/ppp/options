@@ -1,0 +1,7 @@
+# Enable compression, to make data link quicker.
+
+
+crtscts
+vj
+bsdcomp
+deflate

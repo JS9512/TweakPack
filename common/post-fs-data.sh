@@ -31,3 +31,21 @@ echo 0 > /sys/kernel/debug/kgsl/kgsl-3d0/log_level_mem
 echo 0 > /sys/kernel/debug/kgsl/kgsl-3d0/log_level_pwr
 
 echo 10000 > /sys/class/firmware/timeout
+
+
+# Set Adguard DNS
+
+# IPv4
+resetprop -n net.dns1 94.140.14.14
+resetprop -n net.dns2 94.140.15.15
+
+resetprop -n net.rmnet0.dns1 94.140.14.14
+resetprop -n net.rmnet0.dns2 94.140.15.15
+
+
+# IPv6
+resetprop -n net.dns1 2a10:50c0::ad1:ff
+resetprop -n net.dns2 2a10:50c0::ad2:ff
+
+resetprop -n net.rmnet0.dns1 2a10:50c0::ad1:ff
+resetprop -n net.rmnet0.dns2 2a10:50c0::ad2:ff

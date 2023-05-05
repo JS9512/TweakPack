@@ -15,3 +15,18 @@ service call SurfaceFlinger 1022 f 1.5
 # "Disable HW Overlay" Developer Option enabled for smoothness
 service call SurfaceFlinger 1008 i32 1
 
+# Trim trigger
+function trim() {
+fstrim -v $1 >> /cache/magisk.log
+}
+
+trim /system
+trim /vendor
+trim /metadata
+trim /odm
+trim /system_ext
+trim /product
+trim /data
+trim /cache
+trim /persist
+trim /preload

@@ -31,6 +31,7 @@ echo 0 > /sys/kernel/debug/kgsl/kgsl-3d0/log_level_pwr
 echo 10000 > /sys/class/firmware/timeout
 
 
+
 # Set Adguard DNS
 
 # IPv4
@@ -47,3 +48,22 @@ resetprop -n net.dns2 2a10:50c0::ad2:ff
 
 resetprop -n net.rmnet0.dns1 2a10:50c0::ad1:ff
 resetprop -n net.rmnet0.dns2 2a10:50c0::ad2:ff
+
+# Configure kernel task scheduler
+strings=(
+NO_GENTLE_FAIR_SLEEPERS
+NO_NORMALIZED_SLEEPER
+NO_NEW_FAIR_SLEEPERS
+NO_FAIR_SLEEPERS
+NO_NEXT_BUDDY
+LAST_BUDDY
+NO_WAKEUP_PREEMPTION
+NO_AFFINE_WAKEUPS
+NO_RT_RUNTIME_SHARE
+NO_ARCH_POWER
+ENERGY_AWARE
+)
+for i in "${strings[@]}"; do
+echo $i > /sys/kernel/debug/sched_features
+done
+

@@ -75,7 +75,7 @@ debug.sf.swaprect=1
 debug.sf.reboot=1
 debug.sf.software_backend=1
 debug.sf.gpu_comp_tiling=1
-debug.egl.buffcount=4
+
 ro.fb.mode=1
 ro.sf.compbypass.enable=0
 ro.config.enable.hw_accel=true

@@ -61,7 +61,7 @@ for gpu in /sys/class/kgsl/kgsl-3d0; do
 done
 
 # Extreme ZRAM
-total_ram=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+total_ram=$(cat /proc/meminfo | grep MemTotal)
 
 swapoff /dev/block/zram0 > /dev/null 2>&1
 echo 1 > /sys/block/zram0/reset

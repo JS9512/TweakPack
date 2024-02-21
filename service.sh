@@ -9,9 +9,10 @@ MODDIR=${0%/*}
 # This script will be executed in late_start service mode
 
 # Increased Saturation for more vivid colors
-service call SurfaceFlinger 1023 i32 0
+service call SurfaceFlinger 1023 i32 1
 service call SurfaceFlinger 1022 f 1.5
-  
+service call SurfaceFlinger 1015 i32 1 f  0.957 f  0 f  0 f  0 f  0 f  0.976 f  0 f  0 f  0 f  0 f  1 f  0 f  0 f  0 f  0 f  1
+
 # "Disable HW Overlay" Developer Option enabled for smoothness
 service call SurfaceFlinger 1008 i32 1
 

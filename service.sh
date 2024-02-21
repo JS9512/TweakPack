@@ -61,6 +61,9 @@ for gpu in /sys/class/kgsl/kgsl-3d0; do
   echo N > $gpu/adreno_idler_active
 done
 
+# Apply VSync setting
+set start vsync
+
 # Network
 echo 0 > /proc/sys/net/ipv4/tcp_timestamps
 echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse

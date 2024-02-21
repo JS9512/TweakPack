@@ -9,7 +9,7 @@
 
 
 <div align="center">
-  <strong>TweakPack is a Magisk Module containing lots of useful tweaks to improve performance on a rooted Android device.</a></h3>
+  <strong>TweakPack is a Magisk Module meant to improve performance on rooted Android devices. Tweaks are sourced from AOSP and other Magisk Modules, and everything is put together to avoid installing countless modules for just a few tweaks each.</a></h3>
 </div>
 
 

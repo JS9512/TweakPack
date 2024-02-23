@@ -7,6 +7,15 @@ persist.vendor.sys.memplus.enable=false
 persist.sys.memfreeze.enable=true
 # sys.keep_app_1= "package name of your app, without quotation marks"
 
+# High performance Low Memory Killer settings
+ro.config.low_ram=false
+ro.lmk.use_psi=true
+ro.lmk.use_minfree_levels=false
+ro.lmk.debug=true
+ro.lmk.thrashing_limit=50
+ro.lmk.swap_free_low_percentage=10
+ro.lmk.downgrade_pressure=50
+
 # Trim
 ro.sys.fw.use_trim_settings=true
 ro.trim.config=true
@@ -15,13 +24,13 @@ ro.sys.fw.trim_empty_percent=100
 ro.sys.fw.trim_cache_percent=100
 ro.sys.fw.trim_enable_memory=2147483648
 
-#allow update modem profile to satify single ip-type pdp request
+# Allow update modem profile to satify single ip-type pdp request
 persist.vendor.data.profile_update=true
 
-#Enable manual network selection and distinguish 2G/3G/4G
+# Enable manual network selection and distinguish 2G/3G/4G
 persist.vendor.radio.rat_on=combine
 
-#Zygote Preforking
+# Zygote Preforking
 persist.device_config.runtime_native.usap_pool_enabled=true
 persist.sys.usap_pool_enabled=true
 

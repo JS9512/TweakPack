@@ -23,8 +23,9 @@ service call SurfaceFlinger 1035 i32 0
 service call SurfaceFlinger 1006 i32 0 i32 1
 
 # Set kernel parameters
-echo 50331648 > /proc/sys/vm/vm.dirty_bytes
-echo 16777216 > /proc/sys/vm/vm.dirty_background_bytes
+echo 50331648 > /proc/sys/vm/dirty_bytes
+echo 16777216 > /proc/sys/vm/dirty_background_bytes
+echo 1048576 > /proc/sys/vm/max_map_count
 echo 400000 > /proc/sys/kernel/sched_min_granularity_ns
 echo 600000 > /proc/sys/kernel/sched_latency_ns
 

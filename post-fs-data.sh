@@ -36,18 +36,21 @@ echo 75 > /sys/class/mmc_host/mmc0/clk_scaling/down_threshold
 echo 10000 > /sys/class/firmware/timeout
 
 
-# Extreme ZRAM
-total_ram_kb=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}')
-total_ram_mb=$(echo "scale=0; $total_ram_kb /  1024" | bc)
+# Extreme ZRAM 
 
-swapoff /dev/block/zram0 > /dev/null  2>&1
-echo  1 > /sys/block/zram0/reset
-echo  2 > /sys/block/zram0/max_comp_streams
+total_ram_kb=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}')
+total_ram_mb=$(echo "scale=0; $total_ram_kb / 2048" | bc)
+
+swapoff /dev/block/zram0 > /dev/null 2>&1
+echo 1 > /sys/block/zram0/reset
+
+echo 4 > /sys/block/zram0/max_comp_streams
 echo lz4 > /sys/block/zram0/comp_algorithm
 echo ${total_ram_mb}M > /sys/block/zram0/disksize
+
 mkswap /dev/block/zram0
-swapon /dev/block/zram0 -p  100
-echo  100 > /proc/sys/vm/swappiness
+swapon /dev/block/zram0 -p 100
+echo 100 > /proc/sys/vm/swappiness
 
 
 # Set Adguard DNS

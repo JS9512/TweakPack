@@ -144,6 +144,9 @@ debug.sf.showcpu=0
 debug.sf.showbackground=0
 debug.sf.showfps=0
 
+# Disable Strict Mode
+persist.android.strictmode=0
+
 # Optimized HWUI
 ro.hwui.texture_cache_size=72
 ro.hwui.layer_cache_size=48
@@ -179,25 +182,63 @@ debug.mdpcomp.mixedmode.disable=1
 
 # Disable DPM debugging
 persist.vendor.dpm.loglevel=0
-persist.vendor.dpmhalservice.loglevel=0
 
-# Runtime Optimizations
-dalvik.gc.type=precise
+
+# Dalvik VM Settings
 dalvik.vm.checkjni=false
 dalvik.vm.dexopt-data-only=1
-dalvik.vm.heapstartsize=5m
-dalvik.vm.heapgrowthlimit=48m
-dalvik.vm.heapsize=64m
 dalvik.vm.verify-bytecode=false
 dalvik.vm.check-dex-sum=false
 dalvik.vm.execution-mode=int:jit
-dalvik.vm.lockprof.threshold=250
-dalvik.vm.dexopt-flags=m=v,o=y
+dalvik.vm.lockprof.threshold=500
+dalvik.vm.jniopts=warnonly
 dalvik.vm.jmiopts=forcecopy
+dalvik.vm.dexopt-flags=m=y,o=v,u=y
 persist.sys.dalvik.hyperthreading=true
 persist.sys.dalvik.multithread=true
-# dalvik.vm.isa.arm.features=lpae,div
+dalvik.vm.isa.arm.features=lpae,div
+dalvik.vm.heapsize=512M
+dalvik.vm.heapgrowthlimit=512M
+dalvik.vm.heapminfree=4M
+dalvik.vm.heapmaxfree=16M
+dalvik.vm.heaptargetutilization=0.75
+dalvik.vm.heapstartsize=16M
+dalvik.vm.heapmaxsize=512M
 
+# JIT Compiler Settings
+dalvik.vm.execution-mode=int:jit
+dalvik.vm.jitinitialsize=128K
+dalvik.vm.jitmaxsize=128M
+dalvik.vm.jitthreshold=10000
+dalvik.vm.usejitprofiles=true
+dalvik.vm.jitprithreadweight=dalvik.vm.jitthreshold / 20
+dalvik.vm.jittransitionweight=dalvik.vm.jitthreshold / 10
+
+# System UI and System Server Settings
+dalvik.vm.systemuicompilerfilter=speed-profile
+dalvik.vm.systemservercompilerfilter=speed-profile
+
+# Dex2oat Options
+dalvik.vm.dex2oat-filter=speed-profile
+dalvik.vm.dex2oat-very-large=100000000
+dalvik.vm.dex2oat-swap=true
+dalvik.vm.dex2oat64.enabled=true
+
+# Profile-guided Compilation
+dalvik.vm.ps-min-first-save-ms=10000
+dalvik.vm.ps-min-save-period-ms=10000
+dalvik.vm.bgdexopt.new-classes-percent=50
+dalvik.vm.bgdexopt.new-methods-percent=50
+
+# Debug Information
+debug.generate-debug-info=false
+dalvik.vm.dex2oat-minidebuginfo=true
+
+# Other Settings
+dalvik.vm.image-dex2oat-filter=speed-profile
+dalvik.vm.dex2oat-max-image-block-size=1024
+dalvik.vm.dex2oat-resolve-startup-strings=true
+dalvik.vm.gctype=nogenerational_cc
 
 # Qualcomm HW Properties (comment if non-Qualcomm device)
 com.qc.hardware=true

@@ -210,6 +210,7 @@ dalvik.vm.execution-mode=int:jit
 dalvik.vm.jitinitialsize=128K
 dalvik.vm.jitmaxsize=128M
 dalvik.vm.jitthreshold=10000
+dalvik.vm.usejit=true
 dalvik.vm.usejitprofiles=true
 dalvik.vm.jitprithreadweight=dalvik.vm.jitthreshold / 20
 dalvik.vm.jittransitionweight=dalvik.vm.jitthreshold / 10

@@ -6,10 +6,9 @@
 # if Magisk change its mount point in the future
 MODDIR=${0%/*}
 
-
 # This script will be executed in post-fs-data mode
 
-# ZERO LOGS
+# Disable unnecessary logging to reduce system overhead
 stop tcpdump
 stop cnss_diag
 stop logd
@@ -28,49 +27,38 @@ echo 0 > /sys/kernel/debug/kgsl/kgsl-3d0/log_level_drv
 echo 0 > /sys/kernel/debug/kgsl/kgsl-3d0/log_level_mem
 echo 0 > /sys/kernel/debug/kgsl/kgsl-3d0/log_level_pwr
 
-
-# Speed up I/O
+# Optimize I/O operations for better performance
 echo 0 > /d/mmc0/clk_delay
 echo 5 > /sys/class/mmc_host/mmc0/clk_scaling/up_threshold
 echo 75 > /sys/class/mmc_host/mmc0/clk_scaling/down_threshold
 echo 10000 > /sys/class/firmware/timeout
 
-
-# Extreme ZRAM 
-
+# Configure ZRAM for efficient memory management
 total_ram_kb=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}')
 total_ram_mb=$(echo "scale=0; $total_ram_kb / 2048" | bc)
 
 swapoff /dev/block/zram0 > /dev/null 2>&1
 echo 1 > /sys/block/zram0/reset
-
 echo 4 > /sys/block/zram0/max_comp_streams
 echo lz4 > /sys/block/zram0/comp_algorithm
 echo ${total_ram_mb}M > /sys/block/zram0/disksize
-
 mkswap /dev/block/zram0
 swapon /dev/block/zram0 -p 100
 echo 100 > /proc/sys/vm/swappiness
 
-
-# Set Adguard DNS
-
-# IPv4
+# Set efficient DNS settings for faster network operations
 resetprop -n net.dns1 94.140.14.14
 resetprop -n net.dns2 94.140.15.15
-
 resetprop -n net.rmnet0.dns1 94.140.14.14
 resetprop -n net.rmnet0.dns2 94.140.15.15
 
-
-# IPv6
+# IPv6 DNS settings
 resetprop -n net.dns1 2a10:50c0::ad1:ff
 resetprop -n net.dns2 2a10:50c0::ad2:ff
-
 resetprop -n net.rmnet0.dns1 2a10:50c0::ad1:ff
 resetprop -n net.rmnet0.dns2 2a10:50c0::ad2:ff
 
-# Configure kernel task scheduler
+# Configure kernel task scheduler for better responsiveness
 strings=(
 NO_GENTLE_FAIR_SLEEPERS
 NO_NORMALIZED_SLEEPER
@@ -87,4 +75,3 @@ ENERGY_AWARE
 for i in "${strings[@]}"; do
 echo $i > /sys/kernel/debug/sched_features
 done
-

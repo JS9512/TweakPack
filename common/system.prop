@@ -3,54 +3,74 @@
 # ro.sf.lcd_density=320
 
 # Memory
-persist.vendor.sys.memplus.enable=false
-persist.sys.memfreeze.enable=true
+persist.vendor.sys.memplus.enable=true
+persist.sys.memfreeze.enable=false
 # sys.keep_app_1= "package name of your app, without quotation marks"
 
 # High performance Low Memory Killer settings
-ro.config.low_ram=false
-ro.lmk.use_psi=true
-ro.lmk.use_minfree_levels=false
-ro.lmk.debug=true
-ro.lmk.thrashing_limit=50
-ro.lmk.swap_free_low_percentage=10
-ro.lmk.downgrade_pressure=50
+ro.config.low_ram=true
+ro.lmk.use_psi=false
+ro.lmk.use_minfree_levels=true
+ro.lmk.debug=false
+ro.lmk.thrashing_limit=60
+ro.lmk.swap_free_low_percentage=20
+ro.lmk.downgrade_pressure=60
 
 # Trim
-ro.sys.fw.use_trim_settings=true
 ro.trim.config=true
+ro.sys.fw.use_trim_settings=true
 ro.sys.fw.empty_app_percent=50
 ro.sys.fw.trim_empty_percent=100
 ro.sys.fw.trim_cache_percent=100
 ro.sys.fw.trim_enable_memory=2147483648
 
-# Allow update modem profile to satify single ip-type pdp request
+# Allow update modem profile to satisfy single IP-type PDP request
 persist.vendor.data.profile_update=true
 
 # Enable manual network selection and distinguish 2G/3G/4G
 persist.vendor.radio.rat_on=combine
 
-# Zygote Preforking
+# Zygote Preforking can improve app startup times by pre-forking the Zygote process, which is the parent process for all Android apps.
 persist.device_config.runtime_native.usap_pool_enabled=true
 persist.sys.usap_pool_enabled=true
 
-# Renderer
+# Graphics and Rendering Optimizations
 ro.hwui.use_opengl=true
 debug.hwui.renderer=opengl
 debug.composition.type=opengl
 debug.renderengine.backend=gles
-debug.renderengine.backend=skiaglthreaded
 renderthread.skia.reduceopstasksplitting=true
-
-# ANGLE
 ro.gfx.angle.supported=true
 angle_gl_driver_all_angle=1
 
-# UI Rendering
-ro.sf.hw=1
-debug.sf.hw=1
-debug.egl.hw=1
+# Hardware Acceleration and Performance
+persist.sys.ui.hw=1
+sys.use_fifo_ui=1
+video.accelerate.hw=1
+persist.sampling_profiler=0
 debug.performance.tuning=1
+
+# Surface Flinger and Display Optimizations
+ro.surface_flinger.running_without_sync_framework=false
+ro.surface_flinger.max_frame_buffer_acquired_buffers=3
+debug.sf.predict_hwc_composition_strategy=1
+debug.sf.enable_layer_caching=true
+
+# GPU and Rendering Engine Settings
+debug.renderengine.backend=skiaglthreaded
+debug.sf.gpu_comp_tiling=1
+
+# Debugging and Profiling
+debug.hwui.level=0
+debug.sf.showupdates=0
+
+# General System Optimizations
+persist.vendor.data.profile_update=false
+persist.vendor.radio.rat_on=combine
+persist.device_config.runtime_native.usap_pool_enabled=true
+persist.sys.usap_pool_enabled=true
+
+# Additional Performance and Debugging Settings
 hw2d.force=1
 hw3d.force=1
 persist.sys.ui.hw=1
@@ -59,10 +79,10 @@ video.accelerate.hw=1
 persist.sampling_profiler=0
 debug.composition.type=c2d
 dev.pm.dyn_samplingrate=1
-ro.surface_flinger.running_without_sync_framework=true
+ro.surface_flinger.running_without_sync_framework=false
 ro.surface_flinger.max_frame_buffer_acquired_buffers=3
 debug.sf.predict_hwc_composition_strategy=1
-debug.sf.enable_layer_caching=false
+debug.sf.enable_layer_caching=true
 debug.sf.use_phase_offsets_as_durations=1
 debug.sf.late.sf.duration=10500000
 debug.sf.late.app.duration=16600000
@@ -72,27 +92,27 @@ debug.sf.frame_rate_multiple_threshold=120
 debug.sf.electron_frames=1
 debug.sf.enable_advanced_sf_phase_offset=1
 debug.sf.enable_hwc_vds=1
-debug.sf.disable_hwcomposer=1
+debug.sf.disable_hwcomposer=0
 debug.sf.gpu_comp_tiling=1
 debug.sf.recomputecrop=0
-debug.sf.disable_client_composition_cache=1
-debug.sf.disable_backpressure=1
-debug.sf.enable_gl_backpressure=0
+debug.sf.disable_client_composition_cache=0
+debug.sf.disable_backpressure=0
+debug.sf.enable_gl_backpressure=1
 debug.sf.latch_unsignaled=1
 debug.sf.auto_latch_unsignaled=1
 debug.sf.enable_hgl=1
 debug.sf.swaprect=1
 debug.sf.reboot=1
-debug.sf.software_backend=1
-service.sf.prime_shader_cache=0
+debug.sf.software_backend=0
+service.sf.prime_shader_cache=1
 hwui.print_config=choice
-hwui.disable_vsync=true
-hwui.render_dirty_regions=false
+hwui.disable_vsync=false
+hwui.render_dirty_regions=true
 debug.cpurend.vsync=false
-debug.fb.rgb565=1
+debug.fb.rgb565=0
 debug.enabletr=true
 video.use.overlay=1
-debug.disable.bwc=1
+debug.disable.bwc=0
 ro.fb.mode=1
 ro.sf.compbypass.enable=0
 ro.config.enable.hw_accel=true
@@ -127,27 +147,13 @@ ro.wmt.blcr.enable=0
 debug.egl.recordable.rgba8888=1
 persist.sys.use_16bpp_alpha=1
 persist.sys.perf.topAppRenderThreadBoost.enable=true
-
-# Experimental Graphics Enhancer:
-# Supported values: 0, 1, -60
 debug.gr.swapinterval=-60
 debug.egl.swapinterval=-60
-
-# FPS
-ro.fps_enable=1
-boot.fps=20
-gpu.fps=auto
-cpu.fps=auto
-system.fps=auto
 debug.sf.showupdates=0
 debug.sf.showcpu=0
 debug.sf.showbackground=0
 debug.sf.showfps=0
-
-# Disable Strict Mode
 persist.android.strictmode=0
-
-# Optimized HWUI
 ro.hwui.texture_cache_size=72
 ro.hwui.layer_cache_size=48
 ro.hwui.r_buffer_cache_size=8
@@ -159,30 +165,27 @@ ro.hwui.text_small_cache_width=1024
 ro.hwui.text_small_cache_height=1024
 ro.hwui.text_large_cache_width=2048
 ro.hwui.text_large_cache_height=2048
-
-
-# Responsive Touchscreen
 windows.mgr.max_event_per_sec=180
 ro.min_pointer_dur=8
 ro.min.fling_velocity=8000
 ro.max.fling_velocity=12000
 persist.vendor.qti.inputopts.enable=true
+
+# Input touch sensitivity for smoother interactions
 persist.vendor.qti.inputopts.movetouchslop=0.6
 
+# Force MSAA for better graphics rendering
+debug.egl.force_msaa=true
 
-# Force MSAA in Developer Options
-# debug.egl.force_msaa=true
-
-# Do not use mdp composition for more than 5 pipes
+# Optimize MDP composition for smoother UI rendering
 debug.mdpcomp.maxpermixer=5
 persist.hwc.mdpcomp.maxpermixer=5
 
-# Disable mixed mode
-debug.mdpcomp.mixedmode.disable=1
+# Enable mixed mode for better performance in mixed content scenarios
+debug.mdpcomp.mixedmode.disable=0
 
-# Disable DPM debugging
+# Reduce logging to minimize system overhead
 persist.vendor.dpm.loglevel=0
-
 
 # Dalvik VM Settings
 dalvik.vm.checkjni=false
@@ -241,48 +244,59 @@ dalvik.vm.dex2oat-max-image-block-size=1024
 dalvik.vm.dex2oat-resolve-startup-strings=true
 dalvik.vm.gctype=nogenerational_cc
 
-# Qualcomm HW Properties (comment if non-Qualcomm device)
+# Enable hardware acceleration for better performance
 com.qc.hardware=true
 debug.qc.hardware=true
+
+# Preserve buffer for smoother video playback
 debug.qctwa.preservebuf=1
+
+# Enable status bar for better UI responsiveness
 debug.qctwa.statusbar=1
 
-
-# IORap/IOP
+# Disable prefetching to reduce unnecessary background processes
 vendor.enable_prefetch=0
+
+# Disable IOP v3 and UXE for better performance
 vendor.perf.iop_v3.enable=false
 vendor.iop.enable_prefetch_ofr=0
 vendor.iop.enable_uxe=0
+
+# Disable IORAPD for better performance
 ro.iorapd.enable=false
 iorapd.perfetto.enable=false
 iorapd.readahead.enable=false
 persist.device_config.runtime_native_boot.iorap_readahead_enable=false
 persist.device_config.runtime_native_boot.iorap_perfetto_enable=false
 
-# QC framework value-adds
+# Enable AOSP support for better compatibility
 ro.vendor.qti.va_aosp.support=1
 
-# SQL Tweaks Set Config
+# Optimize SQLite for better database performance
 debug.sqlite.journalmode=WAL
 debug.sqlite.syncmode=1
 
-# System property for storage preload
+# Preload storage for faster access
 persist.sys.storage_preload=1
 
-# Fuse PassTrough
+# Enable FUSE passthrough for better file system performance
 persist.sys.fuse.passthrough.enable=true
 
-# Netmgrd
+# Use data netmgrd for better network performance
 ro.use_data_netmgrd=true
 ro.vendor.use_data_netmgrd=true
+
+# Optimize data netmgrd settings for better network performance
 persist.data_netmgrd_mtu=1482
-# persist.data_netmgrd_nint=8
+persist.data_netmgrd_nint=8
 persist.data.netmgrd.qos.enable=true
 persist.vendor.data.netmgrd.qos.enable=true
+
+# Enable concurrent data mode for better network performance
 persist.data.mode=concurrent
 persist.vendor.data.mode=concurrent
 
-#system props for the MM modules
+# Optimize media playback settings for better performance
 media.stagefright.enable-player=true
 media.stagefright.enable-http=true
 media.stagefright.enable-aac=true
@@ -295,8 +309,10 @@ media.stagefright.enable-on=true
 media.stagefright.enable-record=true
 media.stagefright.log-uri=1
 media.stagefright.thumbnail.prefer_hw_codecs=true
-# debug.stagefright.omx_default_rank.sw-audio=1
-# debug.stagefright.omx_default_rank=0
+debug.stagefright.omx_default_rank.sw-audio=1
+debug.stagefright.omx_default_rank=0
+
+# Enable 3G2 and smooth streaming for better media playback
 mmp.enable.3g2=true
 mm.mpeg4dp.hw.support=true
 mm.enable.qcom_parser=37491
@@ -304,9 +320,10 @@ vendor.mm.enable.qcom_parser=63963135
 persist.mm.enable.prefetch=true
 mm.enable.smoothstreaming=true
 mm.enable.sec.smoothstreaming=true
-# mm.disable.sec_smoothstreaming=true
+
+# Enable all media codecs for maximum compatibility
 ro.media.dec.aud.flac.enabled=1
-ro.media.dec.aud.flac.enabled=1
+ro.media.enc.aud.flac.enabled=1
 ro.media.enc.aud.flac.enabled=1
 ro.media.dec.aud.wma.enabled=1
 ro.media.enc.aud.wma.enabled=1
@@ -319,11 +336,13 @@ ro.media.enc.aud.mp3.enabled=1
 ro.media.dec.vid.mp4.enabled=1
 ro.media.enc.vid.mp4.enabled=1
 ro.media.dec.vid.H.264.enabled=1
-ro.media.enc.vid.H.264.enabled=1 
+ro.media.enc.vid.H.264.enabled=1
 
-# RIL
+# Enable AMR Wideband for better voice quality
 ro.ril.enable.amr.wideband=1
 ro.vendor.ril.enable.amr.wideband=1
+
+# Optimize RIL settings for better signal strength and data call handling
 ro.ril.transmitpower=true
 ro.telephony.ril.v3=datacall,signalstrength
 persist.ril.uart.flowctrl=10
@@ -342,16 +361,16 @@ ro.config.hw_roaming_optimize=true
 ro.config.NW_rescan_after_rej=true
 httplive.enable.discontinuity=true
 
-# SETTINGS OVERRIDE
+# Override settings for better network and internet performance
 persist.sys.fflag.override.settings_enable_monitor_phantom_procs=false
 persist.sys.fflag.override.settings_network_and_internet_v2=true
 persist.sys.fflag.override.settings_provider_model=true
 
-# LTE Quality
+# Force LTE CA (Carrier Aggregation) for better LTE performance
 gsm.lte.ca.support=1
 persist.sys.radio.force_lte_ca=true
 
-# Modem power save enabled
+# Optimize power saving settings for better battery life and performance
 persist.sys.shutdown.mode=hibernate
 persist.radio.add_power_save=1
 wifi.supplicant_scan_interval=180
@@ -367,8 +386,8 @@ ro.config.hw_power_saving=true
 ro.mot.eri.losalert.delay=1000
 profiler.force_disable_ulog=true
 profiler.force_disable_err_rpt=true
-profiler.force_disable_err_rpt=1
 profiler.force_disable_ulog=1
+profiler.force_disable_err_rpt=1
 log.tag.FD=silent
 log.tag.app_process=silent
 log.tag.AndroidRuntime=silent
@@ -377,13 +396,13 @@ log.tag.libc=silent
 log.tag.ziparchive=silent
 log.tag.JavaBinder=silent
 
-# Tethering
+# Enable tethering without DUN requirement for easier sharing
 tether_dun_required=0
 ro.tether.denied=false
 
-# TCP
+
+# Optimize TCP settings for better network performance
 net.tcp.2g_init_rwnd=10
-# net.tcp.default_init_rwnd=60
 sys.sysctl.tcp_def_init_rwnd=60
 net.tcp.default_init_rwnd=256960
 net.ipv4.tcp_ecn=1
@@ -408,7 +427,6 @@ net.ipv4.tcp_slow_start_after_idle=0
 ro.data.large_tcp_window_size=true
 net.unix.max_dgram_qlen=50
 
-
 net.ipv4.tcp_max_orphans=400000
 net.ipv4.tcp_tw_recycle=1
 net.ipv4.tcp_tw_reuse=1
@@ -428,13 +446,6 @@ net.netfilter.nf_conntrack_tcp_timeout_last_ack=45
 net.netfilter.nf_conntrack_tcp_timeout_time_wait=45
 net.netfilter.nf_conntrack_tcp_timeout_close=45
 
-net.ipv4.netfilter.ip_conntrack_tcp_timeout_established=600
-net.ipv4.netfilter.ip_conntrack_tcp_timeout_fin_wait=45
-net.ipv4.netfilter.ip_conntrack_tcp_timeout_close_wait=45
-net.ipv4.netfilter.ip_conntrack_tcp_timeout_last_ack=45
-net.ipv4.netfilter.ip_conntrack_tcp_timeout_time_wait=45
-net.ipv4.netfilter.ip_conntrack_tcp_timeout_close=45
-
 net.ipv4.tcp_fin_timeout=45
 
 net.ipv4.tcp_keepalive_time=45
@@ -446,11 +457,17 @@ net.ipv4.tcp_synack_retries=0
 net.ipv4.tcp_syncookies=0
 net.ipv4.tcp_max_syn_backlog=0
 
-net.core.somaxconn=1024
-net.core.optmem_max=20480
-net.core.netdev_max_backlog=65536
-net.ipv4.ip_local_port_range='1025 64000'
+# Increase the maximum number of open sockets waiting for a connection
+net.core.somaxconn=4096
 
+# Increase the maximum amount of memory that can be allocated for the TCP socket transmit buffer
+net.core.optmem_max=25165824
+
+# Increase the maximum number of packets put in the queue for processing if the network interface receives packets faster than the kernel can process them
+net.core.netdev_max_backlog=10000
+
+# Adjust the TCP local port range to accommodate more connections
+net.ipv4.ip_local_port_range='1024 65535'
 
 # Optimized TCP buffer parameters
 net.tcp.buffersize.default=600,60000,150000,600,60000,150000
@@ -466,5 +483,4 @@ net.tcp.buffersize.hspap=600,60000,150000,600,60000,150000
 net.tcp.buffersize.hsupa=600,60000,150000,600,60000,150000
 net.tcp.buffersize.umts=600,60000,150000,600,60000,150000
 net.tcp.buffersize.ethernet=600,60000,150000,600,60000,150000
-
 

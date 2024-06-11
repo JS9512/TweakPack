@@ -26,9 +26,22 @@ service call SurfaceFlinger 1006 i32 0 i32 1
 # Kernel Parameters
 echo 50331648 > /proc/sys/vm/dirty_bytes
 echo 16777216 > /proc/sys/vm/dirty_background_bytes
+echo 100 > /proc/sys/vm/vfs_cache_pressure
+echo 10 > /proc/sys/vm/swappiness
+echo 5 > /proc/sys/vm/dirty_ratio
+echo 5 > /proc/sys/vm/dirty_background_ratio
+echo 1 > /proc/sys/vm/page-cluster
 echo 1048576 > /proc/sys/vm/max_map_count
-echo 400000 > /proc/sys/kernel/sched_min_granularity_ns
+echo 600000 > /proc/sys/kernel/sched_min_granularity_ns
+echo 1200000 > /proc/sys/kernel/sched_wakeup_granularity_ns
 echo 600000 > /proc/sys/kernel/sched_latency_ns
+echo 20000 > /proc/sys/kernel/sched_migration_cost_ns
+echo 0 > /proc/sys/kernel/sched_min_task_util_for_colocation
+
+# CPU Governor
+for cpu in /sys/devices/system/cpu/cpu*; do
+    echo interactive | sudo tee ${cpu}/cpufreq/scaling_governor
+done
 
 # CPU Settings
 echo 50 > /dev/cpuctl/bg_non_interactive/cpu.shares
@@ -64,26 +77,34 @@ for gpu in /sys/class/kgsl/kgsl-3d0; do
  echo N > $gpu/adreno_idler_active
 done
 
-# Apply VSync setting
+# I/O Scheduler
+echo deadline | sudo tee /sys/block/*/queue/scheduler
+
+# Setting nr_requests for an even more improved I/O performance
+for dev in /sys/class/block/*; do
+    if [ -r "${dev}"/queue/nr_requests ]; then
+        echo 3072 | sudo tee ${dev}/queue/nr_requests
+    fi
+done
+
+# VSync setting
 set start vsync
 
 # Network Settings
 echo 0 > /proc/sys/net/ipv4/tcp_timestamps
+echo 1 > /proc/sys/net/ipv4/tcp_low_latency
 echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse
-echo 1 > /proc/sys/net/ipv4/tcp_sack
 echo 4096,16384,404480 > /proc/sys/net/ipv4/tcp_wmem
 echo 4096,87380,404480 > /proc/sys/net/ipv4/tcp_rmem
 echo 1 > /proc/sys/net/ipv4/tcp_rfc1337
 echo 1 > /proc/sys/net/ipv4/tcp_fack
 echo 1 > /proc/sys/net/ipv4/tcp_sack
 echo 1 > /proc/sys/net/ipv4/tcp_dsack
-echo 0 > /proc/sys/net/ipv4/tcp_timestamps
 echo 1 > /proc/sys/net/ipv4/tcp_mtu_probing
 echo 60 > /proc/sys/net/ipv4/tcp_keepalive_time
 echo 10 > /proc/sys/net/ipv4/tcp_keepalive_intvl
 echo 6 > /proc/sys/net/ipv4/tcp_keepalive_probes
 echo 0 > /proc/sys/net/ipv4/tcp_slow_start_after_idle
-echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse
 echo 10 > /proc/sys/net/ipv4/tcp_fin_timeout
 echo 2000000 > /proc/sys/net/ipv4/tcp_max_tw_buckets
 echo 8192 > /proc/sys/net/ipv4/tcp_max_syn_backlog
@@ -99,6 +120,10 @@ echo 16777216 > /proc/sys/net/core/wmem_max
 echo 65536 > /proc/sys/net/core/optmem_max
 echo 8192 > /proc/sys/net/core/somaxconn
 echo 16384 > /proc/sys/net/core/netdev_max_backlog
+
+# Misc Settings
+echo 500 > /sys/kernel/mm/lru_gen/min_ttl_ms
+echo 0 > /sys/module/mmc_core/parameters/use_spi_crc
 
 # Trim Operations
 function trim() {
